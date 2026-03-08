@@ -472,8 +472,8 @@ Inside Out.</div>
      }
 
      // Fade out canvas and gold line as we approach footer
-     if (scrollFraction > 0.80) {
-      const fadeProgress = (scrollFraction - 0.80) / 0.14;
+     if (scrollFraction > 0.75) {
+      const fadeProgress = (scrollFraction - 0.75) / 0.19;
       canvas.style.opacity = Math.max(0, 1 - fadeProgress);
       goldLine.style.opacity = Math.max(0, 1 - fadeProgress);
      } else {
@@ -482,7 +482,7 @@ Inside Out.</div>
      }
 
      // Show footer when scrolling past video
-     if (scrollFraction > 0.94) {
+     if (scrollFraction > 0.85) {
       footer.classList.add('visible');
      } else {
       footer.classList.remove('visible');
