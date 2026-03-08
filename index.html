@@ -19,7 +19,7 @@
  }
 
  body {
-  height: 600vh;
+  height: 800vh;
   font-family: 'Jost', sans-serif;
   background: #111;
  }
@@ -182,6 +182,124 @@
   z-index: 1;
  }
 
+ /* White Footer Section */
+ .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  z-index: 5;
+  transform: translateY(100%);
+  transition: transform 0.5s ease;
+  min-height: 100vh;
+  padding: 80px 48px 60px;
+ }
+
+ .footer.visible {
+  transform: translateY(0);
+ }
+
+ .footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+ }
+
+ .footer h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  color: #111;
+  text-align: center;
+  margin-bottom: 48px;
+  font-weight: 500;
+ }
+
+ .footer h2 span {
+  color: #C9A84C;
+ }
+
+ .reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 64px;
+ }
+
+ .review-card {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 32px;
+ }
+
+ .review-stars {
+  color: #C9A84C;
+  font-size: 16px;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+ }
+
+ .review-text {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 16px;
+ }
+
+ .review-author {
+  color: #111;
+  font-weight: 500;
+  font-size: 13px;
+ }
+
+ .map-section h3 {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  color: #111;
+  text-align: center;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+ }
+
+ .map-container {
+  border-radius: 8px;
+  overflow: hidden;
+  height: 350px;
+ }
+
+ .map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+ }
+
+ .footer-bottom {
+  text-align: center;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+ }
+
+ .footer-bottom p {
+  color: #888;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+ }
+
+ @media (max-width: 768px) {
+  .reviews-grid {
+   grid-template-columns: 1fr;
+   gap: 20px;
+  }
+  .footer {
+   padding: 60px 24px 40px;
+  }
+  .footer h2 {
+   font-size: 32px;
+  }
+ }
+
  /* Mobile */
  @media (max-width: 768px) {
   nav { padding: 24px; }
@@ -244,6 +362,42 @@ Inside Out.</div>
  <!-- Gold line -->
  <div class="gold-line"></div>
 
+ <!-- White Footer -->
+ <section class="footer" id="footer">
+  <div class="footer-content">
+   <h2>What Our <span>Clients</span> Say</h2>
+   
+   <div class="reviews-grid">
+    <div class="review-card">
+     <div class="review-stars">★★★★★</div>
+     <p class="review-text">"Absolutely incredible work. My car looks better than the day I bought it. The team is professional and detail-oriented."</p>
+     <p class="review-author">— Michael R.</p>
+    </div>
+    <div class="review-card">
+     <div class="review-stars">★★★★★</div>
+     <p class="review-text">"I've never seen my car this clean. The ceramic coating is amazing and the finish lasts for months."</p>
+     <p class="review-author">— Sarah T.</p>
+    </div>
+    <div class="review-card">
+     <div class="review-stars">★★★★★</div>
+     <p class="review-text">"Best detailing service in the area. They treat every car like it's their own. Highly recommend!"</p>
+     <p class="review-author">— James L.</p>
+    </div>
+   </div>
+
+   <div class="map-section">
+    <h3>Find Us</h3>
+    <div class="map-container">
+     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98513092404069!3d40.75889607138638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+   </div>
+
+   <div class="footer-bottom">
+    <p>© 2026 Apex Detail. All rights reserved.</p>
+   </div>
+  </div>
+ </section>
+
  <script>
  const FRAME_COUNT = 480;
  const PRIORITY_INTERVAL = 10;
@@ -299,20 +453,30 @@ Inside Out.</div>
   let ticking = false;
   const textBlocks = document.querySelectorAll('.text-block');
   const scrollHeight = document.body.scrollHeight - window.innerHeight;
+  const footer = document.getElementById('footer');
 
   window.addEventListener('scroll', () => {
    if (!ticking) {
     requestAnimationFrame(() => {
      const scrollFraction = window.scrollY / scrollHeight;
 
-     // Frame update
-     const frameIndex = Math.min(Math.floor(scrollFraction * FRAME_COUNT), FRAME_COUNT - 1);
-     if (frameIndex !== currentFrame) {
-      currentFrame = frameIndex;
-      drawFrame(currentFrame);
+     // Frame update - only update frames while in video area
+     if (scrollFraction < 0.94) {
+      const frameIndex = Math.min(Math.floor(scrollFraction * FRAME_COUNT), FRAME_COUNT - 1);
+      if (frameIndex !== currentFrame) {
+       currentFrame = frameIndex;
+       drawFrame(currentFrame);
+      }
      }
 
-     // Text block animation
+     // Show footer when scrolling past video
+     if (scrollFraction > 0.90) {
+      footer.classList.add('visible');
+     } else {
+      footer.classList.remove('visible');
+     }
+
+     // Text block animation - only while in video area
      textBlocks.forEach(block => {
       const start = parseFloat(block.dataset.start);
       const end = parseFloat(block.dataset.end);
