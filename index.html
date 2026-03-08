@@ -454,6 +454,8 @@ Inside Out.</div>
   const textBlocks = document.querySelectorAll('.text-block');
   const scrollHeight = document.body.scrollHeight - window.innerHeight;
   const footer = document.getElementById('footer');
+  const canvas = document.getElementById('scrollCanvas');
+  const goldLine = document.querySelector('.gold-line');
 
   window.addEventListener('scroll', () => {
    if (!ticking) {
@@ -469,8 +471,18 @@ Inside Out.</div>
       }
      }
 
+     // Fade out canvas and gold line as we approach footer
+     if (scrollFraction > 0.80) {
+      const fadeProgress = (scrollFraction - 0.80) / 0.14;
+      canvas.style.opacity = Math.max(0, 1 - fadeProgress);
+      goldLine.style.opacity = Math.max(0, 1 - fadeProgress);
+     } else {
+      canvas.style.opacity = 1;
+      goldLine.style.opacity = 1;
+     }
+
      // Show footer when scrolling past video
-     if (scrollFraction > 0.90) {
+     if (scrollFraction > 0.94) {
       footer.classList.add('visible');
      } else {
       footer.classList.remove('visible');
