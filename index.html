@@ -19,7 +19,7 @@
  }
 
  body {
-  height: 800vh;
+  height: 700vh;
   font-family: 'Jost', sans-serif;
   background: #111;
  }
@@ -184,20 +184,11 @@
 
  /* White Footer Section */
  .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background: #FFFFFF;
   z-index: 5;
-  transform: translateY(100%);
-  transition: transform 0.5s ease;
   min-height: 100vh;
   padding: 80px 48px 60px;
- }
-
- .footer.visible {
-  transform: translateY(0);
+  margin-top: -1px;
  }
 
  .footer-content {
@@ -453,7 +444,6 @@ Inside Out.</div>
   let ticking = false;
   const textBlocks = document.querySelectorAll('.text-block');
   const scrollHeight = document.body.scrollHeight - window.innerHeight;
-  const footer = document.getElementById('footer');
   const canvas = document.getElementById('scrollCanvas');
   const goldLine = document.querySelector('.gold-line');
 
@@ -463,7 +453,7 @@ Inside Out.</div>
      const scrollFraction = window.scrollY / scrollHeight;
 
      // Frame update - only update frames while in video area
-     if (scrollFraction < 0.94) {
+     if (scrollFraction < 0.85) {
       const frameIndex = Math.min(Math.floor(scrollFraction * FRAME_COUNT), FRAME_COUNT - 1);
       if (frameIndex !== currentFrame) {
        currentFrame = frameIndex;
@@ -471,21 +461,14 @@ Inside Out.</div>
       }
      }
 
-     // Fade out canvas and gold line as we approach footer
-     if (scrollFraction > 0.75) {
-      const fadeProgress = (scrollFraction - 0.75) / 0.19;
+     // Fade out canvas and gold line as we approach white section
+     if (scrollFraction > 0.70) {
+      const fadeProgress = (scrollFraction - 0.70) / 0.15;
       canvas.style.opacity = Math.max(0, 1 - fadeProgress);
       goldLine.style.opacity = Math.max(0, 1 - fadeProgress);
      } else {
       canvas.style.opacity = 1;
       goldLine.style.opacity = 1;
-     }
-
-     // Show footer when scrolling past video
-     if (scrollFraction > 0.85) {
-      footer.classList.add('visible');
-     } else {
-      footer.classList.remove('visible');
      }
 
      // Text block animation - only while in video area
